@@ -15,25 +15,27 @@ document.addEventListener('DOMContentLoaded', () => {
     squares.forEach((square, index) => {
         // Add click event listener
         square.addEventListener('click', () => {
-            // Check if the square is already filled or if there is a winner
-            if (!square.textContent && !checkWinner()) {
-                // Set the text to 'X' or 'O'
-                square.textContent = currentPlayer;
-                // Add the class 'X' or 'O' for styling
-                square.classList.add(currentPlayer);
-                // Update the game state
-                gameState[index] = currentPlayer;
+            // Prevent changes if the square already has a value or if there's a winner
+            if (square.textContent || checkWinner()) {
+                return; // Exit if the square is already filled
+            }
 
-                // Check if there is a winner
-                if (checkWinner()) {
-                    // Update the status message
-                    statusDiv.textContent = `Congratulations! ${currentPlayer} is the Winner!`;
-                    // Add the 'you-won' class to the status div
-                    statusDiv.classList.add('you-won');
-                } else {
-                    // Switch players if there is no winner
-                    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-                }
+            // Set the text to 'X' or 'O'
+            square.textContent = currentPlayer;
+            // Add the class 'X' or 'O' for styling
+            square.classList.add(currentPlayer);
+            // Update the game state
+            gameState[index] = currentPlayer;
+
+            // Check if there is a winner
+            if (checkWinner()) {
+                // Update the status message
+                statusDiv.textContent = `Congratulations! ${currentPlayer} is the Winner!`;
+                // Add the 'you-won' class to the status div
+                statusDiv.classList.add('you-won');
+            } else {
+                // Switch players if there is no winner
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
             }
         });
 
