@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const squares = document.querySelectorAll('#board div');
     const statusDiv = document.getElementById('status');
+    const newGameButton = document.querySelector('.btn'); // Assuming the button has a class 'btn'
     let currentPlayer = 'X'; // Start with player 'X'
     const gameState = Array(9).fill(null); // Array to keep track of the game state
 
@@ -45,6 +46,22 @@ document.addEventListener('DOMContentLoaded', () => {
         square.addEventListener('mouseout', () => {
             square.classList.remove('hover');
         });
+    });
+
+    // Add click event listener to the New Game button
+    newGameButton.addEventListener('click', () => {
+        // Reset the game state array
+        gameState.fill(null);
+        // Clear each square's content and remove the 'X' or 'O' class
+        squares.forEach(square => {
+            square.textContent = '';
+            square.classList.remove('X', 'O');
+        });
+        // Reset the status message and remove the 'you-won' class
+        statusDiv.textContent = 'Move your mouse over a square and click to play an X or an O.';
+        statusDiv.classList.remove('you-won');
+        // Reset currentPlayer to 'X'
+        currentPlayer = 'X';
     });
 
     // Function to check if there is a winner
